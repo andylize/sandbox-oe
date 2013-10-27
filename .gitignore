@@ -4,3 +4,7 @@
 *.DS_Store
 *.swp
 *.out
+#eclipse specific
+.project
+.buildpath
+.settings
