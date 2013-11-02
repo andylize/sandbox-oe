@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config>
-	<sqlite_path="./db_sqlite/sandbox.db"/>
+	<sqlite_path>./db_sqlite/sandbox.db</sqlite_path>
 </config>
