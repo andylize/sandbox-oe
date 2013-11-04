@@ -10,6 +10,7 @@
 include './ConfigReader.php';
 
 $configReader = new ConfigReader('./config.xml');
+$sqliteLoc = "";
 
 echo $configReader->getFileLoc() . "\n";
 echo $configReader->getDBLoc() . "\n";

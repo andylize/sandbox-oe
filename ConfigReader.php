@@ -13,7 +13,7 @@ class ConfigReader
 	public function getDBLoc()
 	{
 		echo $this->_xml;
-		return $this->_xml->config->sqlite_path;
+		return $this->_xml->sqlite_path;
 	}
 	
 	// constructor
@@ -27,8 +27,16 @@ class ConfigReader
 	private function loadXML()
 	{
 		try {
-			$this->_xml = simplexml_load_file($this->_configFileLoc);
-			echo "Successfully loaded file.\n";
+			// attempt to load config file, throw exception if not found
+			if (!$this->_xml = simplexml_load_file($this->_configFileLoc))
+			{
+				throw new Exception("Error loading file.");
+			}
+			else 
+			{
+				echo "Successfully loaded file.\n";
+				print_r($this->_xml);
+			}
 		} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
 		}
