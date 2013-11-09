@@ -7,13 +7,19 @@
 
 //$helper->toString();
 
-include './ConfigReader.php';
+// include './ConfigReader.php';
 
-$configReader = new ConfigReader('./config.xml');
-$sqliteLoc = "";
+// $configReader = new ConfigReader('./config.xml');
+// $sqliteLoc = "";
 
-echo $configReader->getFileLoc() . "\n";
-echo $configReader->getDBLoc() . "\n";
+// echo $configReader->getFileLoc() . "\n";
+// echo $configReader->getDBLoc() . "\n";
+
+include './SQLiteReader.php';
+
+$sqliteReader = new SQLiteReader();
+
+echo $sqliteReader->getCommand(1);
 
 
 ?>
