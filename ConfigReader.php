@@ -23,6 +23,11 @@ class ConfigReader
 		$this->loadXML();
 	}
 	
+	public function __toString()
+	{
+		return "ConfigReader class for the file: " . $this->_configFileLoc;
+	}
+	
 	//private methods
 	private function loadXML()
 	{
@@ -31,11 +36,6 @@ class ConfigReader
 			if (!$this->_xml = simplexml_load_file($this->_configFileLoc))
 			{
 				throw new Exception("Error loading file.");
-			}
-			else 
-			{
-				echo "Successfully loaded file.\n";
-				print_r($this->_xml);
 			}
 		} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";

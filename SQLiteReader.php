@@ -40,6 +40,11 @@ class SQLiteReader
 		return $res;
 	}
 	
+	public function __toString()
+	{
+		return "SQLiteReader class for DB: " . $this->_sqliteDBLoc;
+	}
+	
 	//private methods
 	private function loadXML()
 	{

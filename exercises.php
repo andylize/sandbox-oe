@@ -30,5 +30,8 @@ echo "Connection Type: " . $assoc_array[0][connection_type] . "\n";
 echo "Command User: " . $assoc_array[0][command_user] . "\n";
 echo "Command Pass: " . $assoc_array[0][command_pass] . "\n";
 
+echo "\n";
+
+echo (string)$sqliteReader;
 
 ?>
