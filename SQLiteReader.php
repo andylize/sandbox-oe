@@ -19,7 +19,11 @@ class SQLiteReader
 		$this->_sqliteDBLoc = $configReader->getDBLoc();
 		try 
 		{
-			$this->_sqliteDB = new SQLite3($this->_sqliteDBLoc, SQLITE3_OPEN_READONLY);			
+			$this->_sqliteDB = new PDO('sqlite:' . $this->_sqliteDBLoc);
+			$this->_sqliteDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			
+			// uses native method
+			//$this->_sqliteDB = new SQLite3($this->_sqliteDBLoc, SQLITE3_OPEN_READONLY);			
 		}
 		catch (Exception $ex)
 		{
@@ -29,9 +33,11 @@ class SQLiteReader
 	
 	public function getCommand($commandNum)
 	{
-		$result = $this->_sqliteDB->query('SELECT command_text FROM commands WHERE command_id = ' . $commandNum . ';');
-		$res = $result->fetchArray();
-		return $res[0];
+		$result = $this->_sqliteDB->query('SELECT command_text, connection_string, connection_type, command_user, command_pass FROM commands WHERE command_id = ' . $commandNum . ';');
+		$res = $result->fetchAll(PDO::FETCH_ASSOC);
+		// uses native method
+		//$res = $result->fetchArray();
+		return $res;
 	}
 	
 	//private methods
