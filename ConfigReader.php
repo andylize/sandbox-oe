@@ -41,7 +41,6 @@ class ConfigReader
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
 		}
 	}
-
 }
 
 ?>

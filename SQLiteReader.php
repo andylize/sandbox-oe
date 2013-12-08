@@ -33,7 +33,7 @@ class SQLiteReader
 	
 	public function getCommand($commandNum)
 	{
-		$result = $this->_sqliteDB->query('SELECT command_text, connection_string, connection_type, command_user, command_pass FROM commands WHERE command_id = ' . $commandNum . ';');
+		$result = $this->_sqliteDB->query('SELECT command_text, hostname, db_name, connection_string, connection_type, command_user, command_pass FROM commands WHERE command_id = ' . $commandNum . ';');
 		$res = $result->fetchAll(PDO::FETCH_ASSOC);
 		// uses native method
 		//$res = $result->fetchArray();
