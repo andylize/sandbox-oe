@@ -7,8 +7,10 @@ class MSSQLExecutor extends Executor
 {	
 	
 	// constructor
-	public function __construct($connectionString, $commandUser, $commandPass, $commandString)
+	public function __construct($hostName, $db_name, $connectionString, $commandUser, $commandPass, $commandString)
 	{
+		$this->_hostName = $hostName;
+		$this->_db_name = $db_name;
 		$this->_connectionString = $connectionString;
 		$this->_commandUser = $commandUser;
 		$this->_commandPass = $commandPass;
@@ -16,11 +18,10 @@ class MSSQLExecutor extends Executor
 		
 		try
 		{
-			$this->_db = new PDO($this->_connectionString, $this->_commandUser, $this->_commandPass, 
-					array(PDO::ATTR_EMULATE_PREPARES => false,
-					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+			$this->_db = new odbc_($this->_hostName, $this->_commandUser, $this->_commandPass, 
+					$this->_db_name);
 		}
-		catch (PDOException $ex)
+		catch (mysqli_sql_exception $ex)
 		{
 			echo $ex->getMessage();
 		}
@@ -35,25 +36,28 @@ class MSSQLExecutor extends Executor
 	public function execute($fetch_type)
 	{
 		$res;
+		
+		// using mysqli query (non-prepared statement)
 		try
-		{	 
-			$stmt = $this->_db->prepare($this->_commandString);
-			$stmt->execute();
+		{
+			$result = $this->_db->query($this->_commandString);
+			
+			for ($res_array = array(); $row = $result->fetch_assoc(); $res_array[] = $row);			
 			if ($fetch_type == Executor::$XML)
 			{
-				$res=OEUtils::xml_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+				
+				$res=OEUtils::xml_encode($res_array);
 			}
-			else 
+			else
 			{
-				$res=json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+				$res=json_encode($res_array);
 			}
-			//$res = $stmt->fetch(PDO::FETCH_OBJ);
-		} 
-		catch(PDOException $ex) 
+			$result->free();
+		}
+		catch (mysqli_sql_exception $ex)
 		{
 			echo $ex->getMessage();
 		}
-		
 		//if (count($res)<1) {
 			//$res[0] = "No results returned.";
 		//}

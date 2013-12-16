@@ -41,7 +41,7 @@ $mySQLExecutor = new MySQLExecutor($assoc_array[0][hostname], $assoc_array[0][db
 	$assoc_array[0][command_pass], $assoc_array[0][command_text]);
 
 //$new_assoc_array = $mySQLExecutor->execute(MySQLExecutor::$JSON);
-$new_assoc_array = $mySQLExecutor->execute(MySQLExecutor::$JSON);
+$new_assoc_array = $mySQLExecutor->execute(MySQLExecutor::$XML);
 
 
 echo $new_assoc_array;
