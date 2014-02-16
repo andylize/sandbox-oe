@@ -2,6 +2,11 @@
 CREATE DATABASE sandbox;
 USE sandbox;
 
+/*** Create user ***/
+CREATE USER 'oe_user'@'localhost' IDENTIFIED BY 'caPruthab2quphe2';
+GRANT ALL PRIVILEGES ON *.* TO 'oe_user'@'localhost' WITH GRANT OPTION;
+
+
 /*** Create products table ***/
 CREATE TABLE products (prod_id INT
   ,name varchar(15)

@@ -37,8 +37,8 @@ echo "\n";
 
 echo (string)$sqliteReader;
 
-$mySQLExecutor = new MySQLExecutor($assoc_array[0]['hostname'], $assoc_array[0][db_name], $assoc_array[0][connection_string], $assoc_array[0][command_user], 
-	$assoc_array[0][command_pass], $assoc_array[0]['command_text']);
+$mySQLExecutor = new MySQLExecutor($assoc_array[0]['hostname'], $assoc_array[0]['db_name'], $assoc_array[0]['connection_string'], $assoc_array[0]['command_user'], 
+	$assoc_array[0]['command_pass'], $assoc_array[0]['command_text']);
 
 //$new_assoc_array = $mySQLExecutor->execute(MySQLExecutor::$JSON);
 $new_assoc_array = $mySQLExecutor->execute(MySQLExecutor::$XML);
