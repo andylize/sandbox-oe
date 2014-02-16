@@ -3,17 +3,17 @@ CREATE DATABASE sandbox;
 USE sandbox;
 
 /*** Create user ***/
-CREATE USER 'oe_user' IDENTIFIED BY 'caPruthab2quphe2';
-GRANT ALL PRIVILEGES ON *.* TO 'oe_user' WITH GRANT OPTION;
-
+CREATE LOGIN oe_user WITH PASSWORD = 'caPruthab2quphe2';
+CREATE USER oe_user FOR LOGIN oe_user;
+exec sp_addrolemember 'db_owner', 'oe_user';
 
 /*** Create products table ***/
-CREATE TABLE products (prod_id INT
-  ,name varchar(15)
-  ,description varchar(60)
-  ,revision varchar(3)
-  ,product_category char(2)
-  ,PRIMARY KEY (prod_id));
+CREATE TABLE products (
+	prod_id INT PRIMARY KEY
+	,name varchar(15)
+	,description varchar(60)
+	,revision varchar(3)
+	,product_category char(2));
 
 /*** populate products table with test data  ***/
 
