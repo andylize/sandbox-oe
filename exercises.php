@@ -24,7 +24,7 @@ include './MSSQLExecutor.php';
 
 $sqliteReader = new SQLiteReader();
 
-$assoc_array = $sqliteReader->getCommand(1);
+$assoc_array = $sqliteReader->getCommand(2);
 
 echo "Command Text: " . $assoc_array[0]['command_text'] . "\n";
 echo "Hostname: " . $assoc_array[0]['hostname'] . "\n";
@@ -38,11 +38,11 @@ echo "\n";
 
 echo (string)$sqliteReader;
 
-$mySQLExecutor = new MySQLExecutor($assoc_array[0]['hostname'], $assoc_array[0]['db_name'], $assoc_array[0]['connection_string'], $assoc_array[0]['command_user'], 
+$mySQLExecutor = new MSSQLExecutor($assoc_array[0]['hostname'], $assoc_array[0]['db_name'], $assoc_array[0]['connection_string'], $assoc_array[0]['command_user'], 
 	$assoc_array[0]['command_pass'], $assoc_array[0]['command_text']);
 
-$new_assoc_array = $mySQLExecutor->execute(MySQLExecutor::$JSON);
-//$new_assoc_array = $mySQLExecutor->execute(MySQLExecutor::$XML);
+//$new_assoc_array = $mySQLExecutor->execute($mySQLExecutor::$JSON);
+$new_assoc_array = $mySQLExecutor->execute($mySQLExecutor::$XML);
 
 
 echo $new_assoc_array;

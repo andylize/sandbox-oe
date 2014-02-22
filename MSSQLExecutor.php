@@ -1,4 +1,8 @@
 <?php
+/*** Note:
+   * Need to use the PDO driver due to the ms_sql driver being deprecated in PHP 5.3 and later.
+   * However, it is still necessary to install FreeTDS library and php_mssql support.
+   */
 
 include './Executor.php';
 include './OEUtils.php';
@@ -18,10 +22,10 @@ class MSSQLExecutor extends Executor
 		
 		try
 		{
-			$this->_db = new odbc_($this->_hostName, $this->_commandUser, $this->_commandPass, 
-					$this->_db_name);
+			$this->_db = new PDO('dblib:host=' . $this->_hostName . ';dbname=' . $this->_db_name,
+					$this->_commandUser, $this->_commandPass);
 		}
-		catch (mysqli_sql_exception $ex)
+		catch (PDOException $ex)
 		{
 			echo $ex->getMessage();
 		}
@@ -30,19 +34,19 @@ class MSSQLExecutor extends Executor
 	public function __toString()
 	{
 		return "Instance of MSSQLExecutor Class:
-				\nConnection String: " . $this->_connectionString . "\n";
+				\nConnection String: " . 'mssql:host=' . $this->_hostName . ',1433;dbname=' . $this->_db_name . "\n";
 	}
 	
 	public function execute($fetch_type)
 	{
 		$res;
 		
-		// using mysqli query (non-prepared statement)
+		// using PDO query (non-prepared statement)
 		try
 		{
-			$result = $this->_db->query($this->_commandString);
-			
-			for ($res_array = array(); $row = $result->fetch_assoc(); $res_array[] = $row);			
+			$statement = $this->_db->query($this->_commandString);
+			$res_array = $statement->fetchAll(PDO::FETCH_ASSOC);
+					
 			if ($fetch_type == Executor::$XML)
 			{
 				
@@ -52,9 +56,8 @@ class MSSQLExecutor extends Executor
 			{
 				$res=json_encode($res_array);
 			}
-			$result->free();
 		}
-		catch (mysqli_sql_exception $ex)
+		catch (PDOException $ex)
 		{
 			echo $ex->getMessage();
 		}
