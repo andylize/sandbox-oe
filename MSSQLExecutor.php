@@ -24,6 +24,7 @@ class MSSQLExecutor extends Executor
 		{
 			$this->_db = new PDO('dblib:host=' . $this->_hostName . ';dbname=' . $this->_db_name,
 					$this->_commandUser, $this->_commandPass);
+			$this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 		catch (PDOException $ex)
 		{
